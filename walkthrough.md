@@ -1,6 +1,9 @@
-# Walkthrough - Aakash Jayapal Brand Platform V10.0 (Mobile Grid Spans & Mouse Glow Disable)
+# Walkthrough - Aakash Jayapal Brand Platform V0.10 (Mobile Grid Spans & Mouse Glow Disable)
 
-The **V10.0 Mobile Grid Spans & Mouse Glow Disable** has been successfully implemented, audited, and compiled inside the workspace `C:\Users\aakas\.gemini\antigravity\scratch\aakash-brand-platform`.
+The **V0.10 Mobile Grid Spans & Mouse Glow Disable** has been successfully implemented, audited, and compiled inside the workspace `C:\Users\aakas\.gemini\antigravity\scratch\aakash-brand-platform`.
+
+> [!NOTE]
+> All milestones created during this active development phase are designated as **Version 0.x** pre-releases. Once real client projects are populated and the final custom domain is linked, the platform will be promoted to its official stable **Version 1.0** release.
 
 ---
 
