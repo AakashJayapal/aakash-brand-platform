@@ -1,26 +1,168 @@
 @import "tailwindcss";
 
+@theme {
+  /* Dynamic fonts from layout variables */
+  --font-display: var(--font-outfit);
+  --font-body: var(--font-nunito-sans);
+  --font-mono: var(--font-jetbrains-mono);
+
+  /* Easing curves */
+  --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.25, 1.25, 0.5, 1);
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Default: Dark Theme (Obsidian Charcoal & Forest Green) */
+  --accent: #52B788;
+  --accent-rgb: 82, 183, 136;
+  --background: #090C0A;
+  --secondary-bg: #101511;
+  --foreground: #EEF3EE;
+  --foreground-secondary: #92a696;
+  --border-primary: rgba(82, 183, 136, 0.08);
+  --border-secondary: rgba(82, 183, 136, 0.18);
+  --shadow-glow: 0 0 60px -10px rgba(82, 183, 136, 0.12);
+  --grid-line: rgba(82, 183, 136, 0.01);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.light {
+  /* Light Theme (Warm Ivory & Burnt Orange Accent) */
+  --accent: #F26A2E;
+  --accent-rgb: 242, 106, 46;
+  --background: #FAF9F6;      /* half white */
+  --secondary-bg: #FFFDF9;  /* soft sand surface */
+  --foreground: #363532;      /* soft warm graphite text */
+  --foreground-secondary: #7A7875; /* warm gray secondary text */
+  --border-primary: #EADBCB;
+  --border-secondary: #EADBCB;
+  --shadow-glow: 0 0 60px -10px rgba(242, 106, 46, 0.08);
+  --grid-line: rgba(242, 106, 46, 0.015);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body), sans-serif;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Premium Noise Grain Overlay */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0.035;
+  pointer-events: none;
+  z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Premium Grid Patterns */
+.bg-grid-pattern {
+  background-size: 50px 50px;
+  background-image: 
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+}
+
+/* Scroll reveal triggers */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Game progress loading bar animation: loops width from 0% to 100% */
+@keyframes loading-bar {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+.animate-loading-bar {
+  animation: loading-bar 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Reduced Motion Accessibility Support */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  * {
+    animation-delay: 0s !important;
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Accessible Keyboard Focus states */
+*:focus-visible {
+  outline: 2px solid var(--accent) !important;
+  outline-offset: 4px !important;
+}
+
+/* Custom premium text selection styling */
+::selection {
+  background-color: rgba(var(--accent-rgb), 0.12) !important;
+  color: var(--foreground) !important;
+}
+
+/* Custom premium thin scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-secondary);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom premium hover card styles */
+.hover-glow-card {
+  position: relative;
+  transition: border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.5s cubic-bezier(0.25, 1.25, 0.5, 1), 
+              box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hover-glow-card:hover {
+  border-color: rgba(var(--accent-rgb), 0.25);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-glow);
+}
+
+/* Text highlight gradient style */
+.text-gradient-electric {
+  background: linear-gradient(135deg, var(--foreground) 30%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Linear Gradient Masks for Image Blending */
+.blend-portrait-mask {
+  mask-image: linear-gradient(to bottom, black 65%, transparent 98%);
+  -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 98%);
 }

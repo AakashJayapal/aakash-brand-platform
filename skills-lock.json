@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "nano-banana-2": {
+      "source": "pilioai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/nano-banana-2/SKILL.md",
+      "computedHash": "6578f6122babbc35f96e0c9eb79f8e99c7ea0d08d35504d428ce6afac262634d"
+    }
+  }
+}
