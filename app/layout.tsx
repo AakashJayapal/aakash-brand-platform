@@ -96,9 +96,8 @@ export default function RootLayout({
           <main className="flex-grow">{children}</main>
           <Footer />
         </ThemeProvider>
-       <Analytics />
-      <SpeedInsights />
-
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
