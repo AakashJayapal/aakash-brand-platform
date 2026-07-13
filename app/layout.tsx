@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Outfit, Nunito_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
@@ -91,15 +91,17 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-var(--background) text-var(--foreground) transition-colors duration-200">
-        <ThemeProvider>
-          <Header />
-          <main className="flex-grow">{children}</main>
-          <Footer />
-        </ThemeProvider>
-       <Analytics />
-      <SpeedInsights />
+  <ThemeProvider>
+    <Header />
+    <main className="flex-grow">
+      {children}
+    </main>
+    <Footer />
 
-      </body>
+    <Analytics />
+    <SpeedInsights />
+  </ThemeProvider>
+</body>
     </html>
   );
 }
