@@ -138,6 +138,7 @@ body::before {
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 /* Custom premium hover card styles */

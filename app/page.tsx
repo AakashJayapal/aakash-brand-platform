@@ -176,7 +176,7 @@ export default function HomePage() {
 
               {/* Action buttons */}
               <div 
-                className={`flex flex-row gap-3 sm:gap-4 mt-4 w-full sm:w-auto transition-all duration-1000 transform ${
+                className={`flex flex-wrap sm:flex-nowrap gap-3 sm:gap-4 mt-4 w-full sm:w-auto transition-all duration-1000 transform ${
                   heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 }`}
                 style={{ transitionDelay: "600ms" }}
@@ -410,7 +410,7 @@ export default function HomePage() {
 
             <Grid columns={12} gap="lg" className="items-center mt-6 w-full max-w-5xl">
               {/* Left Column: Larger Portrait (420-500px wide visually, blended edges, centered) */}
-              <div className="col-span-12 md:col-span-5 flex justify-center relative items-center">
+              <div className="col-span-12 lg:col-span-5 flex justify-center relative items-center">
                 <div 
                   ref={aboutImageRef}
                   className="relative aspect-[4/5] w-full max-w-[340px] md:max-w-[400px] lg:max-w-[450px] z-10 transition-transform duration-300 ease-out overflow-hidden rounded-3xl"
@@ -437,7 +437,7 @@ export default function HomePage() {
               </div>
 
               {/* Right Column: Concise text + Balanced Tags row (left-aligned) */}
-              <div className="col-span-12 md:col-span-7 flex flex-col gap-6 text-[var(--foreground-secondary)] font-light text-base leading-relaxed text-left items-start pl-0 md:pl-4">
+              <div className="col-span-12 lg:col-span-7 flex flex-col gap-6 text-[var(--foreground-secondary)] font-light text-base leading-relaxed text-left items-start pl-0 lg:pl-4">
                 {profile.behindScreensParagraphs.map((para, idx) => (
                   <p key={idx} className="max-w-xl">{para}</p>
                 ))}
@@ -576,7 +576,7 @@ export default function HomePage() {
 
           <Grid columns={2} gap="lg">
             {/* Project 01 */}
-            <Card className="reveal-on-scroll border border-[var(--border-secondary)] bg-[var(--secondary-bg)]/20 rounded-3xl flex flex-col gap-4 justify-between text-center items-center p-8" hoverable={true}>
+            <Card className="reveal-on-scroll border border-[var(--border-secondary)] bg-[var(--secondary-bg)]/20 rounded-3xl flex flex-col gap-4 justify-between text-center items-center p-6 sm:p-8" hoverable={true}>
               <div className="flex flex-col gap-3 items-center w-full">
                 <div className="flex justify-between items-center w-full">
                   <span className="text-[10px] font-mono text-[var(--accent)] uppercase tracking-wider font-bold">Project 01</span>
@@ -596,7 +596,7 @@ export default function HomePage() {
             </Card>
 
             {/* Project 02 */}
-            <Card className="reveal-on-scroll border border-[var(--border-secondary)] bg-[var(--secondary-bg)]/20 rounded-3xl flex flex-col gap-4 justify-between text-center items-center p-8" hoverable={true}>
+            <Card className="reveal-on-scroll border border-[var(--border-secondary)] bg-[var(--secondary-bg)]/20 rounded-3xl flex flex-col gap-4 justify-between text-center items-center p-6 sm:p-8" hoverable={true}>
               <div className="flex flex-col gap-3 items-center w-full">
                 <div className="flex justify-between items-center w-full">
                   <span className="text-[10px] font-mono text-[var(--accent)] uppercase tracking-wider font-bold">Project 02</span>
@@ -828,7 +828,7 @@ export default function HomePage() {
 
             {/* Right Column Form */}
             <div className="col-span-12 lg:col-span-7 reveal-on-scroll">
-              <Card hoverable={false} className="border border-[var(--border-secondary)] bg-[var(--background)]/80 p-8 rounded-3xl shadow-xs">
+              <Card hoverable={false} className="border border-[var(--border-secondary)] bg-[var(--background)]/80 p-5 sm:p-8 rounded-3xl shadow-xs">
                 <Heading level={3} className="text-[var(--accent)] mb-6 text-xl text-center">Send a Message</Heading>
                 
                 {formSubmitted ? (
