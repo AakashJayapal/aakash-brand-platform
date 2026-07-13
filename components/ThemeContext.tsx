@@ -15,17 +15,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>("dark");
 
   useEffect(() => {
-    // Read preference on client mount
-    const savedTheme = localStorage.getItem("theme") as Theme | null;
-    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-    const initialTheme = savedTheme || systemTheme;
-    
-    setTheme(initialTheme);
-
-    // Apply class to HTML element
+    // Read preference directly from document class set by blocking script
     const root = window.document.documentElement;
-    root.classList.remove("light", "dark");
-    root.classList.add(initialTheme);
+    const isLight = root.classList.contains("light");
+    setTheme(isLight ? "light" : "dark");
   }, []);
 
   const toggleTheme = () => {

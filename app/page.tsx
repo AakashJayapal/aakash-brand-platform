@@ -8,6 +8,7 @@ import {
   Cpu, Compass, Database, Terminal, Calendar,
   GraduationCap, PhoneCall, Mail, Award, Layers3, Smartphone, CompassIcon, ArrowUp
 } from "lucide-react";
+import dynamic from "next/dynamic";
 
 // Design System Primitives
 import { Section } from "@/components/ui/Section";
@@ -19,10 +20,10 @@ import { Tag } from "@/components/ui/Tag";
 import { Timeline } from "@/components/ui/Timeline";
 import { Grid } from "@/components/ui/Grid";
 
-// Client Interaction Helpers
-import { MouseGlow } from "@/components/MouseGlow";
-import { ScrollObserver } from "@/components/ScrollObserver";
-import { ScrollReveal } from "@/components/ScrollReveal";
+// Dynamic imports of client-only non-critical layout components to decrease initial load bundle
+const MouseGlow = dynamic(() => import("@/components/MouseGlow").then((mod) => mod.MouseGlow), { ssr: false });
+const ScrollObserver = dynamic(() => import("@/components/ScrollObserver").then((mod) => mod.ScrollObserver), { ssr: false });
+const ScrollReveal = dynamic(() => import("@/components/ScrollReveal").then((mod) => mod.ScrollReveal), { ssr: false });
 
 // Content Layer Modules
 import { profile } from "@/content/profile";
@@ -32,10 +33,9 @@ import { skillsGroups } from "@/content/skills";
 import { socialChannels } from "@/content/social";
 
 export default function HomePage() {
-  const [coords, setCoords] = useState({ x: 0, y: 0 });
   const heroImageRef = useRef<HTMLDivElement>(null);
+  const heroGlowRef = useRef<HTMLDivElement>(null);
   const aboutImageRef = useRef<HTMLDivElement>(null);
-  const [aboutScrollOffset, setAboutScrollOffset] = useState(0);
   const [heroVisible, setHeroVisible] = useState(false);
 
   // Form submission state
@@ -48,31 +48,39 @@ export default function HomePage() {
     message: ""
   });
 
-  // Track cursor location relative to hero image for dynamic lighting shifts
+  // Track cursor location relative to hero image for dynamic lighting shifts without state updates
   useEffect(() => {
     // Trigger Hero Load Animation
     setHeroVisible(true);
 
     const handleMouseMove = (e: MouseEvent) => {
       if (!heroImageRef.current) return;
-      const rect = heroImageRef.current.getBoundingClientRect();
+      const rect = heroImageRef.current.parentElement?.getBoundingClientRect();
+      if (!rect) return;
       const x = (e.clientX - rect.left - rect.width / 2) * 0.05;
       const y = (e.clientY - rect.top - rect.height / 2) * 0.05;
-      setCoords({ x, y });
-    };
-
-    // Parallax scrolling calculation for about portrait
-    const handleScroll = () => {
-      if (!aboutImageRef.current) return;
-      const rect = aboutImageRef.current.getBoundingClientRect();
-      const scrolled = window.innerHeight - rect.top;
-      if (scrolled > 0) {
-        setAboutScrollOffset(scrolled * 0.04);
+      
+      // Update element styles directly via refs to avoid high-frequency React re-renders!
+      heroImageRef.current.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+      if (heroGlowRef.current) {
+        heroGlowRef.current.style.transform = `translate3d(${x * -1.2}px, ${y * -1.2}px, 0)`;
       }
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("scroll", handleScroll);
+    // Parallax scrolling calculation for about portrait via direct DOM manipulation
+    const handleScroll = () => {
+      if (!aboutImageRef.current) return;
+      const rect = aboutImageRef.current.parentElement?.getBoundingClientRect();
+      if (!rect) return;
+      const scrolled = window.innerHeight - rect.top;
+      if (scrolled > 0) {
+        aboutImageRef.current.style.transform = `translate3d(0, ${scrolled * -0.02}px, 0)`;
+      }
+    };
+
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("scroll", handleScroll);
@@ -191,14 +199,13 @@ export default function HomePage() {
               style={{ transitionDelay: "750ms" }}
             >
               <div 
+                ref={heroGlowRef}
                 className="absolute h-64 w-64 rounded-full bg-radial from-[rgba(var(--accent-rgb),0.1)] to-transparent pointer-events-none blur-2xl z-0 transition-transform duration-300"
-                style={{ transform: `translate3d(${coords.x * -1.2}px, ${coords.y * -1.2}px, 0)` }}
               />
               
               <div 
                 ref={heroImageRef}
                 className="relative aspect-[3/4] w-full max-w-[280px] rounded-3xl overflow-hidden blend-portrait-mask z-10 shadow-xl transition-transform duration-300"
-                style={{ transform: `translate3d(${coords.x}px, ${coords.y}px, 0)` }}
               >
                 <div className="absolute inset-0 bg-[var(--accent)]/5 mix-blend-multiply z-20 pointer-events-none" />
                 <Image
@@ -206,6 +213,8 @@ export default function HomePage() {
                   alt="Aakash Jayapal"
                   fill
                   priority
+                  quality={90}
+                  decoding="async"
                   sizes="(max-w-768px) 100vw, 30vw"
                   className="object-cover object-top filter grayscale contrast-110 hover:grayscale-0 transition-all duration-700 ease-in-out"
                 />
@@ -405,7 +414,6 @@ export default function HomePage() {
                 <div 
                   ref={aboutImageRef}
                   className="relative aspect-[4/5] w-full max-w-[340px] md:max-w-[400px] lg:max-w-[450px] z-10 transition-transform duration-300 ease-out overflow-hidden rounded-3xl"
-                  style={{ transform: `translate3d(0, ${aboutScrollOffset * -0.5}px, 0)` }}
                 >
                   {/* Soft radial overlay to blend background naturally */}
                   <div 
@@ -419,6 +427,9 @@ export default function HomePage() {
                     src="/aakash-about.jpg"
                     alt="Aakash Jayapal Storyboard"
                     fill
+                    loading="lazy"
+                    quality={85}
+                    decoding="async"
                     sizes="(max-w-768px) 100vw, 40vw"
                     className="object-cover filter contrast-105"
                   />
@@ -736,6 +747,9 @@ export default function HomePage() {
                     src="/aakash-portrait.jpg"
                     alt="Aakash Jayapal"
                     fill
+                    loading="lazy"
+                    quality={80}
+                    decoding="async"
                     sizes="64px"
                     className="object-cover"
                   />

@@ -1,36 +1,42 @@
-# Walkthrough - Aakash Jayapal Brand Platform V7.6 (Behind the Screens Redesign)
+# Walkthrough - Aakash Jayapal Brand Platform V8.0 (Performance Refinement)
 
-The **V7.6 Creative and Product Direction adjustments** have been successfully implemented, audited, and compiled inside the workspace `C:\Users\aakas\.gemini\antigravity\scratch\aakash-brand-platform`.
-
----
-
-## 1. Shortened Copy & Content
-- Shortened the **Behind the Screens** copy by ~50%, removing the third paragraph.
-- Updated the content in `content/profile.ts` to feature exactly the two requested paragraphs:
-  - *“Curiosity has always shaped the way I learn and design...”*
-  - *“Outside of design, I'm a movie enthusiast who enjoys studying storytelling...”*
+The **V8.0 Performance Refinement** has been successfully implemented, audited, and compiled inside the workspace `C:\Users\aakas\.gemini\antigravity\scratch\aakash-brand-platform`.
 
 ---
 
-## 2. Enlarged Portrait Column
-- Increased the size of the portrait wrapper on desktop to `max-w-[450px]` with `aspect-[4/5]`.
-- Aligned the vertical alignment to the center (`items-center` on the Grid) to match the text height.
-- Removed borders, shadows, card wrappers, and card styling.
-- Blended the image borders into the website's background using a soft, custom radial-gradient overlay mask:
+## 1. High-Frequency State Removal (Refs & LERP Animations)
+- **Zero React Re-renders**: Removed the React coordinate state (`coords`) and scroll state (`aboutScrollOffset`) from `page.tsx` completely.
+- **Direct DOM Manipulation**: Rewrote `handleMouseMove` and `handleScroll` to modify DOM element styles directly via refs:
+  - `heroImageRef.current.style.transform`
+  - `heroGlowRef.current.style.transform`
+  - `aboutImageRef.current.style.transform`
+- **Linear Interpolation (LERP)**: Configured the cursor glow in `MouseGlow.tsx` with a LERP ease delay:
   ```typescript
-  background: `radial-gradient(circle at center, transparent 38%, var(--background) 100%)`
+  targetCoords.current.x += (mouseCoords.current.x - targetCoords.current.x) * 0.15;
   ```
+  This delivers visual update rates (60FPS+) without triggering CPU cycles on React rendering hooks.
 
 ---
 
-## 3. Personality Tags Redesign
-- Reconfigured the personality tags into two balanced horizontal flex rows:
-  - **Row 1**: Movie Enthusiast, AI Explorer, Systems Thinker, Problem Solver.
-  - **Row 2**: Lifelong Learner, Detail Oriented, Builder, Creative Technologist.
-- Structured them to center-align on mobile viewports and left-align on desktop viewports.
+## 2. Dynamic Imports of Non-Critical Code
+- Dynamic-loaded `MouseGlow`, `ScrollObserver`, and `ScrollReveal` with `{ ssr: false }` to prevent hydration blocks and initial JS load bloat.
 
 ---
 
-## 4. Verification & Compliance
+## 3. Image Loading & Build Enhancements
+- Configured Next.js Image priorities, quality variables, and lazy loading strategies on all images:
+  - **Hero Portrait**: `priority={true} quality={90} decoding="async"`.
+  - **About Portrait**: `loading="lazy" quality={85} decoding="async"`.
+  - **Contact Portrait**: `loading="lazy" quality={80} decoding="async"`.
+- Enabled automatic AVIF/WebP formats and Gzip/Brotli compression overrides in `next.config.ts`.
+
+---
+
+## 4. Theme System Polish
+- Injected a blocking script inside `<head>` in `layout.tsx` to read user preferences and append theme class selectors before initial document layout paint. This removes theme flashes.
+
+---
+
+## 5. Verification & Compliance
 - **Compiler checks**: Successfully built using Next.js Turbopack (`npm run build`).
-- **Dev Server**: Running on port 3000 (`PID 17108`).
+- **Production Deploy**: Live at **[https://aakash-brand-platform.vercel.app](https://aakash-brand-platform.vercel.app)**.

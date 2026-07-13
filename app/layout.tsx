@@ -11,18 +11,21 @@ const outfit = Outfit({
   variable: "--font-outfit",
   subsets: ["latin"],
   weight: ["600", "700", "800"],
+  display: "swap", // Ensure swap strategy to avoid layout shifting
 });
 
 const nunitoSans = Nunito_Sans({
   variable: "--font-nunito-sans",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
+  display: "swap",
 });
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -89,19 +92,36 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        {/* Inline script to prevent theme flash and layout shift before initial page paint */}
+        <script
+          id="theme-script"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var saved = localStorage.getItem('theme');
+                  var system = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                  var theme = saved || system;
+                  document.documentElement.classList.remove('light', 'dark');
+                  document.documentElement.classList.add(theme);
+                } catch (e) {}
+              })();
+            `
+          }}
+        />
       </head>
-      <body className="min-h-full flex flex-col bg-var(--background) text-var(--foreground) transition-colors duration-200">
-  <ThemeProvider>
-    <Header />
-    <main className="flex-grow">
-      {children}
-    </main>
-    <Footer />
+      <body className="min-h-full flex flex-col bg-[var(--background)] text-[var(--foreground)] transition-colors duration-200">
+        <ThemeProvider>
+          <Header />
+          <main className="flex-grow">
+            {children}
+          </main>
+          <Footer />
 
-    <Analytics />
-    <SpeedInsights />
-  </ThemeProvider>
-</body>
+          <Analytics />
+          <SpeedInsights />
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

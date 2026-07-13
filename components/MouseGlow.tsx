@@ -1,18 +1,22 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 
 export function MouseGlow() {
-  const [coords, setCoords] = useState({ x: 0, y: 0 });
-  const [opacity, setOpacity] = useState(0);
-  const [hue, setHue] = useState(0);
-  const [isOverInteractive, setIsOverInteractive] = useState(false);
+  const glowRef = useRef<HTMLDivElement>(null);
+  const mouseCoords = useRef({ x: 0, y: 0 });
+  const targetCoords = useRef({ x: 0, y: 0 });
+  const isOverInteractiveRef = useRef(false);
+  const opacityRef = useRef(0);
+  const hueRef = useRef(0);
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setCoords({ x: e.clientX, y: e.clientY });
+    // Set initial opacity to fade in after page paint
+    opacityRef.current = 0.85;
 
-      // Check if mouse is pointing at a button, anchor link, input, textarea, or pointer element
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseCoords.current = { x: e.clientX, y: e.clientY };
+
       const target = e.target as HTMLElement | null;
       if (target) {
         const isInteractive = 
@@ -23,27 +27,42 @@ export function MouseGlow() {
           target.closest("[role='button']") ||
           window.getComputedStyle(target).cursor === "pointer";
           
-        setIsOverInteractive(!!isInteractive);
+        isOverInteractiveRef.current = !!isInteractive;
       }
     };
 
-    const handleMouseEnter = () => setOpacity(1);
-    const handleMouseLeave = () => setOpacity(0);
+    const handleMouseEnter = () => {
+      opacityRef.current = 0.85;
+    };
+    const handleMouseLeave = () => {
+      opacityRef.current = 0;
+    };
 
-    window.addEventListener("mousemove", handleMouseMove);
+    // Use passive event listener for best scrolling performance
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
     document.body.addEventListener("mouseenter", handleMouseEnter);
     document.body.addEventListener("mouseleave", handleMouseLeave);
 
-    // Dynamic rainbow cycling ticker
     let frame: number;
     const tick = () => {
-      setHue(prev => (prev + 0.8) % 360);
+      // Linear interpolation (LERP) for smooth ease lag
+      targetCoords.current.x += (mouseCoords.current.x - targetCoords.current.x) * 0.15;
+      targetCoords.current.y += (mouseCoords.current.y - targetCoords.current.y) * 0.15;
+
+      // Cycle hue color wheel
+      hueRef.current = (hueRef.current + 0.8) % 360;
+
+      if (glowRef.current) {
+        const glowOpacity = isOverInteractiveRef.current ? 0.04 : 0.20;
+        const glowSecondaryOpacity = isOverInteractiveRef.current ? 0.005 : 0.02;
+
+        glowRef.current.style.opacity = String(opacityRef.current);
+        glowRef.current.style.background = `radial-gradient(550px circle at ${targetCoords.current.x}px ${targetCoords.current.y}px, hsla(${hueRef.current}, 70%, 60%, ${glowOpacity}) 0%, hsla(${(hueRef.current + 60) % 360}, 70%, 60%, ${glowSecondaryOpacity}) 45%, transparent 80%)`;
+      }
+
       frame = requestAnimationFrame(tick);
     };
     frame = requestAnimationFrame(tick);
-
-    // Initial trigger
-    setOpacity(0.85);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
@@ -53,17 +72,11 @@ export function MouseGlow() {
     };
   }, []);
 
-  // Reduce mouse glow intensity but don't shut it off completely (from 20% down to a subtle 4% when hovering interactive items)
-  const glowOpacity = isOverInteractive ? 0.04 : 0.20;
-  const glowSecondaryOpacity = isOverInteractive ? 0.005 : 0.02;
-
   return (
     <div
+      ref={glowRef}
       className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300 ease-out"
-      style={{
-        opacity,
-        background: `radial-gradient(550px circle at ${coords.x}px ${coords.y}px, hsla(${hue}, 70%, 60%, ${glowOpacity}) 0%, hsla(${(hue + 60) % 360}, 70%, 60%, ${glowSecondaryOpacity}) 45%, transparent 80%)`,
-      }}
+      style={{ opacity: 0 }}
     />
   );
 }
