@@ -130,7 +130,7 @@ export default function HomePage() {
         <Container>
           <Grid columns={12} gap="xl" className="items-center z-20">
             {/* Left Column: Text content (left-aligned) */}
-            <div className="col-span-12 lg:col-span-7 flex flex-col items-start gap-5 sm:gap-6">
+            <div className="col-span-1 lg:col-span-7 flex flex-col items-start gap-5 sm:gap-6">
               {/* Availability tag & Location pills (accent styled) */}
               <div 
                 className={`flex flex-wrap items-center gap-2.5 font-mono text-[9px] sm:text-[10px] tracking-widest text-[var(--accent)] font-semibold uppercase transition-all duration-1000 transform ${
@@ -193,7 +193,7 @@ export default function HomePage() {
 
             {/* Right Column: Interactive Portrait image */}
             <div 
-              className={`col-span-12 lg:col-span-5 relative mt-8 lg:mt-0 flex justify-center lg:justify-end items-center transition-all duration-1200 transform ${
+              className={`col-span-1 lg:col-span-5 relative mt-8 lg:mt-0 flex justify-center lg:justify-end items-center transition-all duration-1200 transform ${
                 heroVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
               }`}
               style={{ transitionDelay: "750ms" }}
@@ -251,7 +251,7 @@ export default function HomePage() {
                   >
                     <Grid columns={12} gap="xl" className="items-center">
                       {/* Image Frame */}
-                      <div className="col-span-12 lg:col-span-6 flex justify-center">
+                      <div className="col-span-1 lg:col-span-6 flex justify-center">
                         <div className="aspect-video w-full max-w-xl rounded-2xl bg-black border border-[var(--border-secondary)] flex items-center justify-center overflow-hidden relative shadow-md hover-glow-card transition-all duration-500">
                           <div className="absolute inset-0 bg-radial from-[rgba(var(--accent-rgb),0.04)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                           
@@ -344,7 +344,7 @@ export default function HomePage() {
                       </div>
 
                       {/* Content Details (centered) */}
-                      <div className="col-span-12 lg:col-span-6 flex flex-col items-center gap-4 text-center">
+                      <div className="col-span-1 lg:col-span-6 flex flex-col items-center gap-4 text-center">
                         <div className="flex items-center gap-3 border-b border-[var(--border-secondary)] pb-2.5 w-full justify-center">
                           <span className="font-mono text-[9px] sm:text-[10px] text-[var(--accent)] uppercase tracking-wider font-normal">{project.category}</span>
                           <span className="font-mono text-xs text-[var(--foreground-secondary)]/50">&bull;</span>
@@ -410,7 +410,7 @@ export default function HomePage() {
 
             <Grid columns={12} gap="lg" className="items-center mt-6 w-full max-w-5xl">
               {/* Left Column: Larger Portrait (420-500px wide visually, blended edges, centered) */}
-              <div className="col-span-12 lg:col-span-5 flex justify-center relative items-center">
+              <div className="col-span-1 lg:col-span-5 flex justify-center relative items-center">
                 <div 
                   ref={aboutImageRef}
                   className="relative aspect-[4/5] w-full max-w-[340px] md:max-w-[400px] lg:max-w-[450px] z-10 transition-transform duration-300 ease-out overflow-hidden rounded-3xl"
@@ -437,7 +437,7 @@ export default function HomePage() {
               </div>
 
               {/* Right Column: Concise text + Balanced Tags row (left-aligned) */}
-              <div className="col-span-12 lg:col-span-7 flex flex-col gap-6 text-[var(--foreground-secondary)] font-light text-base leading-relaxed text-left items-start pl-0 lg:pl-4">
+              <div className="col-span-1 lg:col-span-7 flex flex-col gap-6 text-[var(--foreground-secondary)] font-light text-base leading-relaxed text-left items-start pl-0 lg:pl-4">
                 {profile.behindScreensParagraphs.map((para, idx) => (
                   <p key={idx} className="max-w-xl">{para}</p>
                 ))}
@@ -740,7 +740,7 @@ export default function HomePage() {
 
           <Grid asymmetric={true} columns={12} className="items-start gap-12">
             {/* Left Column Info */}
-            <div className="col-span-12 lg:col-span-5 flex flex-col items-center gap-6 reveal-on-scroll text-center mx-auto max-w-sm">
+            <div className="col-span-1 lg:col-span-5 flex flex-col items-center gap-6 reveal-on-scroll text-center mx-auto max-w-sm">
               <div className="flex flex-col items-center gap-3">
                 <div className="relative h-16 w-16 rounded-full overflow-hidden border-2 border-[var(--accent)] bg-zinc-955 shadow-md">
                   <Image
@@ -827,7 +827,7 @@ export default function HomePage() {
             </div>
 
             {/* Right Column Form */}
-            <div className="col-span-12 lg:col-span-7 reveal-on-scroll">
+            <div className="col-span-1 lg:col-span-7 reveal-on-scroll">
               <Card hoverable={false} className="border border-[var(--border-secondary)] bg-[var(--background)]/80 p-5 sm:p-8 rounded-3xl shadow-xs">
                 <Heading level={3} className="text-[var(--accent)] mb-6 text-xl text-center">Send a Message</Heading>
                 

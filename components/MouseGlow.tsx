@@ -11,6 +11,14 @@ export function MouseGlow() {
   const hueRef = useRef(0);
 
   useEffect(() => {
+    // Disable mouse glow on mobile/tablet viewports or touch devices to save resources
+    if (window.innerWidth < 1024 || 'ontouchstart' in window || navigator.maxTouchPoints > 0) {
+      if (glowRef.current) {
+        glowRef.current.style.display = "none";
+      }
+      return;
+    }
+
     // Set initial opacity to fade in after page paint
     opacityRef.current = 0.85;
 
