@@ -1,36 +1,109 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Aakash Jayapal — Digital Brand Platform
 
-## Getting Started
+A handcrafted digital portfolio that showcases my work, journey, design philosophy, and ongoing product experiments as a Product Designer.
 
-First, run the development server:
+**Live Website**
+👉 https://aakash-brand-platform.vercel.app
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## About
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+This portfolio is more than a personal website. It's a digital resume, a design playground, and a storytelling experience built to help recruiters, founders, and freelance clients understand how I think, design, and solve problems.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The experience focuses on:
 
-## Learn More
+- Product Design
+- UI/UX Design
+- Brand Identity
+- Design Systems
+- AI-assisted Creative Work
+- Frontend Collaboration
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Featured Work
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- HRMS Platform
+- Milo Cabs
+- City Wash
+- TVaster
+- Genkalp Website
+- Petrol Bunk Management
+- Brand Identity Projects
+- Logo Design
+- Social Media Campaigns
+- AI Generated Creative Assets
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Currently Building
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### CMS Portfolio Platform
+
+A content-driven portfolio platform designed for creators who want complete control over storytelling, content management, and long-term scalability.
+
+### AI-powered Business Operating System
+
+An intelligent workspace that combines CRM, project management, finance, documents, communication, and workflow automation into a single AI-powered platform.
+
+---
+
+## Tech Stack
+
+- Next.js 16
+- React
+- TypeScript
+- Tailwind CSS v4
+- Prisma ORM
+- PostgreSQL
+- Auth.js
+- shadcn/ui
+- Framer Motion
+
+---
+
+## Features
+
+- Responsive Design
+- Dark & Light Themes
+- WCAG AA Accessibility
+- SEO Optimized
+- JSON-LD Structured Data
+- Open Graph Support
+- Optimized Performance
+- Mobile-first Experience
+- Interactive Animations
+- CMS-driven Content
+- Contact Form
+- Resume Download
+
+---
+
+## Design Principles
+
+- Simplicity over complexity
+- Systems before screens
+- Business goals aligned with user needs
+- Thoughtful interactions
+- Accessibility by default
+
+---
+
+## Connect
+
+Portfolio  
+https://aakash-brand-platform.vercel.app
+
+LinkedIn  
+https://www.linkedin.com/in/aakashjayapal/
+
+Behance  
+https://www.behance.net/aakashjayapaluiux
+
+Email  
+uiux.aakashjayapal@gmail.com
+
+---
+
+Designed and built by **Aakash Jayapal**.
