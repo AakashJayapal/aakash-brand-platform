@@ -20,7 +20,7 @@ export function MouseGlow() {
     }
 
     // Set initial opacity to fade in after page paint
-    opacityRef.current = 0.85;
+    opacityRef.current = 1;
 
     const handleMouseMove = (e: MouseEvent) => {
       mouseCoords.current = { x: e.clientX, y: e.clientY };
